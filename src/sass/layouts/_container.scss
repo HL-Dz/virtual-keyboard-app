@@ -1,4 +1,8 @@
 .container {
   max-width: $content-width;
   margin: auto;
+
+  @include media-laptop {
+    padding: 0 20px;
+  }
 }

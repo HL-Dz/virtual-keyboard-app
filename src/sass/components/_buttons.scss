@@ -1,0 +1,146 @@
+.keyboard__btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 6%;
+  color: #fff;
+  font-size: 2.3rem;
+  font-family: Arial;
+  background: #191818;
+  height: 60px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 2px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include media-tablet {
+    font-size: 1.6rem;
+    height: 40px;
+  }
+
+  @include media-mobile {
+    font-size: 1.3rem;
+  }
+}
+
+.upper-symb {
+  font-size: 1.4rem;
+  position: absolute;
+  top: 1px;
+  right: 5px;
+
+  @include media-tablet {
+    right: 2px;
+    font-size: 1rem;
+   }
+}
+
+
+// Function buttons
+[data-fn="true"] {
+  background: #424242;
+  font-size: 1.8rem;
+
+  @include media-tablet {
+    font-size: 1.2rem;
+  }
+
+  @include media-mobile {
+    font-size: 0.8rem;
+  }
+}
+
+[data-code="Delete"] {
+  width: 16%;
+}
+
+[data-code="Backspace"] {
+  width: 16.5%;
+}
+
+[data-code="Tab"] {
+  width: 12%;
+}
+
+[data-code="Enter"] {
+  width: 10%;
+}
+
+[data-code="CapsLock"] {
+  width: 13%;
+}
+
+[data-code="CapsLock"].keyboard__btn_activatible::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #191818;
+  @extend %transition;
+
+  @include media-tablet {
+    top: 2px;
+    right: 2px;
+    width: 7px;
+    height: 7px;
+  } 
+}
+
+[data-code="CapsLock"].keyboard__btn_active::after {
+  background: #2fe42f;
+  animation: btn-active 1.5s infinite;
+}
+
+
+
+[data-code="ShiftLeft"],
+[data-code="ShiftRight"] {
+  width: 12.3%;
+}
+
+[data-code="ControlLeft"],
+[data-code="AltLeft"],
+[data-code="AltRight"] {
+  width: 9%;
+}
+
+[data-code="ControlLeft"] {
+  width: 7%;
+}
+
+[data-code="Space"] {
+  width: 45%;
+  @include media-tablet {
+    width: 72%;
+  }
+}
+
+[data-code="ArrowUp"],
+[data-code="ArrowLeft"],
+[data-code="ArrowDown"],
+[data-code="ArrowRight"] {
+  @include media-tablet {
+    display: none;
+  }
+}
+
+
+@keyframes btn-active{
+  0% {
+    background: #191818;
+  }
+  50%{
+    background: #2fe42f;
+  }
+  100% {
+    background: #191818;
+  }
+}

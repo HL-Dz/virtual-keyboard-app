@@ -1,0 +1,44 @@
+.keyboard {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 10px;
+  background: $color-keyboard;
+  box-shadow: 0 0 50px rgba(77, 78, 77, 0.4);
+  @extend %transition-keyboard;
+
+  &_hidden {
+    bottom: -100%;
+  }
+
+  @include media-tablet {
+    padding: 15px 5px ;
+  }
+}
+
+.keyboard__line {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  max-width: 1200px;
+  margin: 0 auto 5px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include media-tablet {
+   height: 40px;
+  }
+}
+
+
+.output-field {
+  width: 100%;
+  margin-top: 20px;
+  resize: none;
+  border: 1px solid rgb(190, 185, 185);
+  border-radius: 2px;
+  outline: none;
+  padding: 5px;
+}
