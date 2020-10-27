@@ -9,8 +9,8 @@ const createNode = (elem,classNames,child,parent,...dataAttr) => {
   }
 
   // child
-  if(child & Array.isArray(child)) {
-    child.forEach(childElem => childElem && element.append(child));
+  if(child && Array.isArray(child)) {
+    child.forEach(childElem => childElem && element.append(childElem));
   } else if (child && typeof child === 'object') {
     element.append(child);
   } else if (child && typeof child === 'string') {
