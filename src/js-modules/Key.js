@@ -17,9 +17,17 @@ export default class Key {
 
 
     this.letter = createNode('div', 'letter', small);
-    this.btn =  createNode('div', 'keyboard__btn', [this.upperSymb, this.letter], null,
-      ['code', this.code],
-      this.isFnKey ? ['fn', 'true'] : ['fn', 'false']
-    )
+
+    if(small.match(/Caps/gi)){
+      this.btn =  createNode('div', 'keyboard__btn keyboard__btn_activatible', [this.upperSymb, this.letter], null,
+        ['code', this.code],
+        this.isFnKey ? ['fn', 'true'] : ['fn', 'false']
+      )
+    } else {
+      this.btn =  createNode('div', 'keyboard__btn', [this.upperSymb, this.letter], null,
+        ['code', this.code],
+        this.isFnKey ? ['fn', 'true'] : ['fn', 'false']
+      )
+    }
   }
 };
