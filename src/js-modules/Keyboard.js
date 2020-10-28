@@ -21,7 +21,8 @@ export default class Keyboard {
       ['cols', 50],
       ['placeholder', 'Set focus here and start typing the task...'],
     );
-    this.keyboard = createNode('div', 'keyboard', null, main, ['language', langCode]);
+
+    this.keyboard = createNode('div', 'keyboard keyboard_hidden', null, main, ['language', langCode]);
     document.body.prepend(main);
     return this;
   }
@@ -39,5 +40,10 @@ export default class Keyboard {
         }
       })
     })
+    this.textarea.addEventListener('focus', this.openKeyboard.bind(this));
+  }
+
+  openKeyboard(){
+    this.keyboard.classList.remove('keyboard_hidden');
   }
 }
