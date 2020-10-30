@@ -6,3 +6,6 @@
   transition: bottom 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
+%transition-key-active {
+  transition: box-shadow 0.2s ease, background-color 0.3s ease;
+}
