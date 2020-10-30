@@ -23,6 +23,10 @@
     & .letter {
       font-size: 1.7rem;
     }
+
+    & .upper-symb {
+      font-size: 1.1rem;
+    }
   }
 
   &:last-child {
@@ -44,6 +48,7 @@
   position: absolute;
   top: 1px;
   right: 5px;
+  transition: font-size 0.1s linear;
 
   @include media-tablet {
     right: 2px;

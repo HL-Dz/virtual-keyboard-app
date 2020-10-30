@@ -19,7 +19,7 @@ export default class Keyboard {
     this.textarea = createNode('textarea', 'output-field', null, container,
       ['rows', 5],
       ['cols', 50],
-      ['placeholder', 'Set focus here and start typing the task...'],
+      ['placeholder', 'Set focus here or press any key and start typing the task...'],
     );
 
     this.keyboard = createNode('div', 'keyboard keyboard_hidden', null, main, ['language', langCode]);
@@ -41,9 +41,26 @@ export default class Keyboard {
       })
     })
     this.textarea.addEventListener('focus', this.openKeyboard.bind(this));
+    document.addEventListener('keydown', this.handleEvent.bind(this));
+    document.addEventListener('keyup', this.handleEvent.bind(this));
   }
 
   openKeyboard(){
     this.keyboard.classList.remove('keyboard_hidden');
+  }
+
+  handleEvent(e){
+    if(e.stopPropagation) e.stopPropagation();
+    const {type,code} = e;
+    const keyObj = this.keyButtons.find(key => key.code === code);
+    if(!keyObj) return;
+    this.textarea.focus();
+
+    if(type.match(/keydown|mousedown/)) {
+      if(type.match(/keydown/)) e.preventDefault();
+      keyObj.btn.classList.add('keyboard__btn_active');
+    } else if (type.match(/keyup|mouseup/gi)) {
+      keyObj.btn.classList.remove('keyboard__btn_active');
+    }
   }
 }
