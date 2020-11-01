@@ -58,9 +58,43 @@ export default class Keyboard {
 
     if(type.match(/keydown|mousedown/)) {
       if(type.match(/keydown/)) e.preventDefault();
+      if(code.match(/Shift/g)) this.shiftKey = true;
+      if(code.match(/Alt/g)) this.altKey = true;
+
+      if(code.match(/Shift/g) && this.altKey) this.swtichLangs();
+      if(code.match(/Alt/g) && this.shiftKey) this.swtichLangs();
+
       keyObj.btn.classList.add('keyboard__btn_active');
     } else if (type.match(/keyup|mouseup/gi)) {
+      if(code.match(/Shift/g)) this.shiftKey = false;
+      if(code.match(/Alt/g)) this.altKey = false;
+
       keyObj.btn.classList.remove('keyboard__btn_active');
     }
+  }
+
+
+  swtichLangs(){
+    const allLangs = Object.keys(language);
+    let currentIndex = allLangs.indexOf(this.keyboard.dataset.language);
+    this.currentLayout = currentIndex + 1 < allLangs.length ? language[allLangs[currentIndex += 1]]
+    : language[allLangs[currentIndex -= currentIndex]];
+
+    this.keyboard.dataset.language = allLangs[currentIndex];
+    storage.set('keyboardLang', allLangs[currentIndex]);
+
+   this.keyButtons.forEach(button=> {
+     const keyObj = this.currentLayout.find(key=> key.code === button.code);
+     if(!keyObj) return;
+     button.shift = keyObj.shift;
+     button.small = keyObj.small;
+     if(keyObj.shift && keyObj.shift.match(/[^a-zA-Zа-яА-ЯёЁ0-9]/g)) {
+       button.upperSymb.innerHTML = keyObj.shift
+     } else {
+      button.upperSymb.innerHTML = '';
+     }
+
+     button.letter.innerHTML = keyObj.small;
+   }) 
   }
 }
