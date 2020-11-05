@@ -64,6 +64,16 @@ export default class Keyboard {
       if(code.match(/Shift/g) && this.altKey) this.swtichLangs();
       if(code.match(/Alt/g) && this.shiftKey) this.swtichLangs();
 
+      if(!this.isCaps) {
+        this.renderSymbols(keyObj, this.shiftKey ? keyObj.shift : keyObj.small);
+      } else if (this.isCaps) {
+        if(this.shiftKey) {
+          this.renderSymbols(keyObj, keyObj.upperSymb.innerHTML ? keyObj.shift : keyObj.small);
+        } else {
+          this.renderSymbols(keyObj, !keyObj.upperSymb.innerHTML ? keyObj.shift : keyObj.small);
+        }
+      }
+
       keyObj.btn.classList.add('keyboard__btn_active');
     } else if (type.match(/keyup|mouseup/gi)) {
       if(code.match(/Shift/g)) this.shiftKey = false;
@@ -96,5 +106,55 @@ export default class Keyboard {
 
      button.letter.innerHTML = keyObj.small;
    }) 
+  }
+
+  renderSymbols(keyObj,symbol){
+    let cursorPos = this.textarea.selectionStart;
+    const left = this.textarea.value.slice(0,cursorPos);
+    const right = this.textarea.value.slice(cursorPos);
+
+    const fnButtonsHandler = {
+      Tab: () => {
+        this.textarea.value = `${left}\t${right}`;
+        cursorPos += 1;
+      },
+      ArrowLeft: () => {
+        cursorPos = cursorPos - 1 >= 0 ? cursorPos - 1 : 0;
+      },
+      ArrowRight: () => {
+        cursorPos += 1;
+      },
+      ArrowUp: () => {
+        const positionFromLeft = this.textarea.value.slice(0, cursorPos).match(/(\n).*$(?!\1)/g) || [[1]];
+        cursorPos -= positionFromLeft[0].length;
+      },
+      ArrowDown: () => {
+        const positionFromLeft = this.textarea.value.slice(cursorPos).match(/^.*(\n).*(?!\1)/) || [[1]];
+        cursorPos += positionFromLeft[0].length;
+      },
+      Enter: () => {
+        this.textarea.value = `${left}\n${right}`;
+        cursorPos += 1;
+      },
+      Backspace: () => {
+        this.textarea.value = `${left.slice(0, -1)}${right}`;
+        cursorPos -= 1;
+      },
+      Delete: () => {
+        this.textarea.value = `${left}${right.slice(1)}`;
+      },
+      Space: () => {
+        this.textarea.value = `${left} ${right}`;
+        cursorPos += 1;
+      }
+    }
+    
+    if(fnButtonsHandler[keyObj.code]) fnButtonsHandler[keyObj.code]();
+
+    else if(!keyObj.isFnKey) {
+      cursorPos += 1;
+      this.textarea.value = `${left}${symbol || ''}${right}`;
+    }
+    this.textarea.setSelectionRange(cursorPos, cursorPos);
   }
 }
