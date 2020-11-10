@@ -48,7 +48,15 @@
   position: absolute;
   top: 1px;
   right: 5px;
-  transition: font-size 0.1s linear;
+  transition: all 0.2s linear;
+
+  &_active {
+    font-size: 1.9rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
 
   @include media-tablet {
     right: 2px;
@@ -57,7 +65,15 @@
 }
 
 .letter {
-  transition: font-size 0.1s linear;
+  transition: all 0.2s linear;
+  position: absolute;
+
+  &_inactive {
+    bottom: 7px;
+    left: 7px;
+    font-size: 1.9rem;
+    color: #968d8d;
+  }
 }
 
 
