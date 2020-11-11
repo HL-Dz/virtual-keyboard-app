@@ -59,10 +59,25 @@ export default class Keyboard {
     if(type.match(/keydown|mousedown/)) {
       if(type.match(/keydown/)) e.preventDefault();
       if(code.match(/Shift/g)) this.shiftKey = true;
+
+      if(code.match(/Control/g)) this.ctrlKey = true;
       if(code.match(/Alt/g)) this.altKey = true;
 
-      if(code.match(/Shift/g) && this.altKey) this.swtichLangs();
-      if(code.match(/Alt/g) && this.shiftKey) this.swtichLangs();
+      if(this.shiftKey) this.switchUpperCase(true);
+
+      if(code.match(/Control/g) && this.altKey) this.swtichLangs();
+      if(code.match(/Alt/g) && this.ctrlKey) this.swtichLangs();
+
+      keyObj.btn.classList.add('keyboard__btn_active');
+
+      if(code.match(/Caps/g) && !this.isCaps) {
+        this.isCaps = true;
+        this.switchUpperCase(true);
+      } else if (code.match(/Caps/g) && this.isCaps) {
+        this.isCaps = false;
+        this.switchUpperCase(false);
+        keyObj.btn.classList.remove('keyboard__btn_active');
+      }
 
       if(!this.isCaps) {
         this.renderSymbols(keyObj, this.shiftKey ? keyObj.shift : keyObj.small);
@@ -74,12 +89,16 @@ export default class Keyboard {
         }
       }
 
-      keyObj.btn.classList.add('keyboard__btn_active');
     } else if (type.match(/keyup|mouseup/gi)) {
-      if(code.match(/Shift/g)) this.shiftKey = false;
-      if(code.match(/Alt/g)) this.altKey = false;
+      if(code.match(/Shift/g)) {
+        this.shiftKey = false;
+        this.switchUpperCase(false);
+      };
 
-      keyObj.btn.classList.remove('keyboard__btn_active');
+      if(code.match(/Alt/g)) this.altKey = false;
+      if(code.match(/Control/g)) this.ctrlKey = false;
+
+      if(!code.match(/Caps/g)) keyObj.btn.classList.remove('keyboard__btn_active');
     }
   }
 
@@ -105,6 +124,8 @@ export default class Keyboard {
      }
 
      button.letter.innerHTML = keyObj.small;
+
+     if(this.isCaps) this.switchUpperCase(true);
    }) 
   }
 
@@ -156,5 +177,45 @@ export default class Keyboard {
       this.textarea.value = `${left}${symbol || ''}${right}`;
     }
     this.textarea.setSelectionRange(cursorPos, cursorPos);
+  }
+
+  switchUpperCase(isTrue){
+    if(isTrue) {
+      this.keyButtons.forEach(button=> {
+        if(button.upperSymb.innerHTML) {
+          if(this.shiftKey) {
+            button.upperSymb.classList.add('upper-symb_active');
+            button.letter.classList.add('letter_inactive');
+          }
+        }
+
+        if(!button.isFnKey && this.isCaps && !this.shiftKey && !button.upperSymb.innerHTML) {
+          button.letter.innerHTML = button.shift;
+        } else if (!button.isFnKey && this.isCaps && this.shiftKey) {
+          button.letter.innerHTML = button.small;
+        } else if (!button.isFnKey && !button.upperSymb.innerHTML) {
+          button.letter.innerHTML = button.shift;
+        }
+      })
+    } else {
+      this.keyButtons.forEach(button=> {
+        if(button.upperSymb.innerHTML && !button.isFnKey) {
+          button.upperSymb.classList.remove('upper-symb_active');
+          button.letter.classList.remove('letter_inactive');
+
+          if(!this.isCaps) {
+            button.letter.innerHTML = button.small;
+          } else if (!this.isCaps) {
+            button.letter.innerHTML = button.shift
+          }
+        } else if (!button.isFnKey) {
+          if(this.isCaps) {
+            button.letter.innerHTML = button.shift;
+          } else {
+            button.letter.innerHTML = button.small;
+          }
+        }
+      })
+    }
   }
 }

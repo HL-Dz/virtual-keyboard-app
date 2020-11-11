@@ -48,7 +48,7 @@
   position: absolute;
   top: 1px;
   right: 5px;
-  transition: all 0.2s linear;
+  transition: all 0.1s linear;
 
   &_active {
     font-size: 1.9rem;
@@ -65,7 +65,7 @@
 }
 
 .letter {
-  transition: all 0.2s linear;
+  transition: all 0.1s linear;
   position: absolute;
 
   &_inactive {
