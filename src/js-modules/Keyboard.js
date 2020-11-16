@@ -40,18 +40,37 @@ export default class Keyboard {
         }
       })
     })
-    this.textarea.addEventListener('focus', this.openKeyboard.bind(this));
-    document.addEventListener('keydown', this.handleEvent.bind(this));
-    document.addEventListener('keyup', this.handleEvent.bind(this));
+    this.textarea.addEventListener('focus', this.openKeyboard);
+    document.addEventListener('keydown', this.handleEvent);
+    document.addEventListener('keyup', this.handleEvent);
+    this.keyboard.onmousedown = this.preHandleEvent;
+    this.keyboard.onmouseup = this.preHandleEvent;
   }
 
-  openKeyboard(){
+  preHandleEvent = (e) => {
+    e.stopPropagation();
+    const keyElem = e.target.closest('.keyboard__btn');
+    if(!keyElem) return;
+    const { dataset: { code } } = keyElem;
+    keyElem.addEventListener('mouseleave', this.resetButtonState);
+    this.handleEvent({code, type: e.type});
+  };
+
+  
+  resetButtonState = (e) => {
+    const code = e.target.dataset.code;
+    const keyObj = this.keyButtons.find(key=> key.code === code);
+    if(!keyObj.code.match(/Caps|Shift/g)) keyObj.btn.classList.remove('keyboard__btn_active');
+    keyObj.btn.removeEventListener('mouseleave', this.resetButtonState);
+  }
+
+  openKeyboard = () => {
     this.keyboard.classList.remove('keyboard_hidden');
   }
 
-  handleEvent(e){
+  handleEvent = (e) => {
     if(e.stopPropagation) e.stopPropagation();
-    const {type,code} = e;
+    const { type,code } = e;
     const keyObj = this.keyButtons.find(key => key.code === code);
     if(!keyObj) return;
     this.textarea.focus();
