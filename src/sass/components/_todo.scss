@@ -1,0 +1,158 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s ease;
+
+  &_hide {
+    top: -100%;
+  }
+}
+
+.todo {
+  background: rgb(3,1,14);
+  background: linear-gradient(310deg, rgba(3,1,14,1) 0%, rgba(18,83,46,1) 100%);
+  width: 95%;
+  max-height: 95%;
+  overflow: auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 45px grey;
+}
+
+.todo__wrapper {
+  padding: 10px;
+  height: 100%;
+  border-top: 1px solid rgb(176, 179, 178);
+  border-bottom: 1px solid rgb(179, 176, 176);
+}
+
+.todo__title {
+  text-align: center;
+  font-size: 3.5rem;
+  color: rgb(221, 217, 217);
+  font-weight: bold;
+
+  &_mod {
+    color: #7aeb7a;
+  }
+}
+
+.wrapper-list {
+  max-height: 90%;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #585858;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.item__label {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  margin-right: 15px;
+  transition: all 0.2s linear;
+}
+
+.item__input {
+  display: none;
+  margin-right: 10px;
+}
+
+.additional {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.additional:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 20px;
+  height: 20px;
+  background: #5ef15e;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.item__text {
+  cursor: pointer;
+}
+
+.item__remove {
+  position: relative;
+  margin-left: auto;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  &:hover {
+    & .item__remove-img {
+      max-width: 40px;    
+    }   
+  }
+}
+
+.item__remove-img {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 30px;
+  max-heigth: auto;
+  transition: all 0.2s ease-in-out;
+}
+
+.item__input:checked + .additional:before {
+  opacity: 1;
+  animation: checkbox-elem 0.5s ease;
+}
+
+.item__input:checked + .additional {
+  border-color: #5ef15e;
+}
+
+@keyframes checkbox-elem {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+  }
+  50% {
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+    box-shadow: 0 0 50px 20px #fff, 0 0 50px 50px #5ef15e;
+  }
+  100% {
+    width: 20px;
+    height: 20px;
+  }
+}
