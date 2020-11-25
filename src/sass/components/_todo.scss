@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   transition: all 1s ease;
+  z-index: 2;
 
   &_hide {
     top: -100%;
@@ -126,7 +127,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 30px;
-  max-heigth: auto;
+  max-height: auto;
   transition: all 0.2s ease-in-out;
 }
 
@@ -137,6 +138,11 @@
 
 .item__input:checked + .additional {
   border-color: #5ef15e;
+}
+
+.todo__empty {
+  font-size: 2.8rem;
+  color: #fff;
 }
 
 @keyframes checkbox-elem {

@@ -27,12 +27,12 @@ const createNode = (elem,classNames,child,parent,...dataAttr) => {
     dataAttr.forEach(([attrName,attrValue]) => {
       if(attrValue === '') {
         element.setAttribute(attrName, '')
-      }
-
-      if(attrName.match(/id|title|value|name|type|placeholder|src|cols|rows/gi)) {
-        element.setAttribute(attrName,attrValue)
       } else {
-        element.dataset[attrName] = attrValue;
+        if(attrName.match(/id|title|value|name|type|placeholder|src|cols|rows|for/gi)) {
+          element.setAttribute(attrName,attrValue)
+        } else {
+          element.dataset[attrName] = attrValue;
+        }
       }
     })
   }
