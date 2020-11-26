@@ -1,3 +1,4 @@
+// BASIC KEYBOARD BUTTONS
 .keyboard__btn {
   display: flex;
   flex-direction: column;
@@ -78,7 +79,7 @@
 
 
 
-// Function buttons
+// FUNCTION KEYBOARD BUTTONS
 [data-fn="true"] {
   background: rgb(43,45,45);
   background: linear-gradient(0deg, rgba(43,45,45,1) 0%, rgba(102,101,99,1) 100%);
@@ -185,5 +186,58 @@
   }
   100% {
     background: #191818;
+  }
+}
+
+// "ADD TASK" BUTTON
+.show-tasks, .add-task {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  padding: 10px 0;
+  font-size: 2.1rem;
+  font-weight: bold;
+  @extend %font-montserrat;
+  color: #4dcf87;
+  background: #eff3f8;
+  height: 100px;
+  max-height: 100px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px #79b98c, 23px 0 20px -23px #79b98c, 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  outline: none;
+  border: none;
+  transition: all 0.4s ease;
+
+  &:hover {
+    color: #0d9240;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .3), -23px 0 20px -23px #b2eac2, 23px 0 20px -23px #b2eac2, 0 0 40px rgba(0, 0, 0, .2) inset;
+  }
+}
+
+.show-tasks {
+  margin-bottom: 15px;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: rgb(216, 213, 213);
+  }
+}
+
+.add-task {
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: rgb(216, 213, 213);
   }
 }

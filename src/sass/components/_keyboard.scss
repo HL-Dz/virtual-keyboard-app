@@ -1,3 +1,7 @@
+.content {
+  margin-top: 15px;
+}
+
 .keyboard {
   position: fixed;
   left: 0;
@@ -34,11 +38,16 @@
 
 
 .output-field {
-  width: 100%;
-  margin-top: 20px;
+  position: relative;
+  display: block;
+  margin: 0 auto 15px;
+  width: 80%;
+  color: #464846;
+  @extend %font-montserrat;
   resize: none;
-  border: 1px solid rgb(190, 185, 185);
+  border: 1px solid rgb(216, 213, 213);
   border-radius: 2px;
   outline: none;
   padding: 5px;
+  z-index: 2;
 }
