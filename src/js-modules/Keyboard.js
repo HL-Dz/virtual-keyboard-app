@@ -16,11 +16,13 @@ export default class Keyboard {
 
   init(langCode){
     this.currentLayout = language[langCode];
+    this.allTasks = createNode('button', 'show-tasks', 'Show all tasks', container);
     this.textarea = createNode('textarea', 'output-field', null, container,
-      ['rows', 5],
+      ['rows', 4],
       ['cols', 50],
-      ['placeholder', 'Set focus here or press any key and start typing the task...'],
+      ['placeholder', `Set focus here or press any key and start typing the task...\nUse Ctrl + Alt to switch language`],
     );
+    this.addTask = createNode('button', 'add-task', 'Add new task...', container);
 
     this.keyboard = createNode('div', 'keyboard keyboard_hidden', null, main, ['language', langCode]);
     document.body.prepend(main);
