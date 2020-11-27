@@ -3,6 +3,10 @@ import createNode from './create-node.js';
 
 export let tasks = [];
 
+if(localStorage.getItem("tasks")) {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
+}
+
 export class Todolist {
   constructor(todos){
     this.todos = todos;
@@ -99,6 +103,7 @@ export class Todolist {
     }
 
     this.todos.push(newItem);
-    this.generateNewListItem(newItem, this.todos.length -1 );
+    localStorage.setItem("tasks", JSON.stringify(this.todos));
+    this.generateNewListItem(newItem, this.todos.length - 1);
   }
 }
