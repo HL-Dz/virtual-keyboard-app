@@ -2,6 +2,9 @@ import createNode from './create-node.js';
 import * as storage from './storage.js';
 import language from './layouts/general.js'
 import Key from './Key.js';
+import { tasks, Todolist } from './todo-list.js';
+
+const todolist = new Todolist(tasks).init();
 
 
 const main = createNode('main', 'content', null);
@@ -47,6 +50,13 @@ export default class Keyboard {
     document.addEventListener('keyup', this.handleEvent);
     this.keyboard.onmousedown = this.preHandleEvent;
     this.keyboard.onmouseup = this.preHandleEvent;
+    this.allTasks.onclick = todolist.openTodolist;
+
+    this.addTask.addEventListener('click', () => {
+      todolist.addNewItem(this.textarea.value);
+      this.textarea.value = '';
+      this.textarea.focus();
+    })
   }
 
   preHandleEvent = (e) => {
