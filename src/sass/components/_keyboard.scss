@@ -10,7 +10,7 @@
   padding: 20px 10px;
   background: $color-keyboard;
   box-shadow: 0 0 50px rgba(77, 78, 77, 0.4);
-  z-index: 3fde;
+  z-index: 3;
   @extend %transition-keyboard;
 
   &_hidden {
