@@ -28,7 +28,7 @@ const createNode = (elem,classNames,child,parent,...dataAttr) => {
       if(attrValue === '') {
         element.setAttribute(attrName, '')
       } else {
-        if(attrName.match(/id|title|value|name|type|placeholder|src|cols|rows|for/gi)) {
+        if(attrName.match(/id|title|value|name|type|placeholder|src|cols|rows|for|data/gi)) {
           element.setAttribute(attrName,attrValue)
         } else {
           element.dataset[attrName] = attrValue;

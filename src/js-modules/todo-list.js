@@ -20,11 +20,15 @@ export class Todolist {
     // todo
     this.todo = createNode('div', 'todo', null, this.overlay);
 
+    // closeBtn
+    this.closeBtn = createNode('div', 'todo__close', null, this.todo, ['title', 'Close']);
+    this.closeIcon = createNode('div', 'todo__close-icon', null, this.closeBtn);
+
     // todoWrapper
     this.todoWrapper = createNode('div', 'todo__wrapper', null, this.todo);
     
     // todoTitle
-    this.todoTitlte = createNode('h1', 'todo__title',
+    this.todoTitle = createNode('h1', 'todo__title',
       [createNode('span', 'todo__title_mod',  'TODO'), 'List'], this.todoWrapper);
 
     // wrapList 
@@ -40,6 +44,7 @@ export class Todolist {
     }
     document.body.prepend(this.overlay);
     this.hideTodolist();
+    this.closeBtn.onclick = this.hideTodolist;
     return this;
   }
 
