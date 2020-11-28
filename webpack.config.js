@@ -20,7 +20,7 @@ const cssLoaders = (extra) => {
         reload: true,
       },
     },
-    "css-loader",
+    "css-loader?url=false",
   ];
   if (extra) {
     loaders.push(extra);
