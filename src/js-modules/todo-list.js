@@ -43,7 +43,7 @@ export class Todolist {
       this.emptyElem = createNode('div', 'todo__empty', str, this.todoWrapper);
     }
     document.body.prepend(this.overlay);
-    // this.hideTodolist();
+    this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
     return this;
   }
@@ -57,6 +57,7 @@ export class Todolist {
 
   // Rendering a new list item
   generateNewListItem = (el,ind) => {
+    const { time, date } = el.startTime;
     // item
       this.item = createNode('div', 'item', null, this.wrapList,
       ['elem', ind + 1]
@@ -66,8 +67,8 @@ export class Todolist {
     this.itemPeriod = createNode('div', 'item__period', null, this.item);
       // itemStart
       this.itemStart = createNode('div', 'item__start', null, this.itemPeriod);
-        this.startItemTime = createNode('div', 'item__start-time', '11:58', this.itemStart);
-        this.startItemDate = createNode('div', 'item__start-date', '30.11.2020',  this.itemStart);
+        this.startItemTime = createNode('div', 'item__start-time', time, this.itemStart);
+        this.startItemDate = createNode('div', 'item__start-date', date,  this.itemStart);
       // itemFinish
       this.itemFinish = createNode('div', 'item__finish', null, this.itemPeriod);
         this.finishItemTime = createNode('div', 'item__finish-time', '12:03', this.itemFinish);
@@ -110,7 +111,9 @@ export class Todolist {
 
     let newItem = {
       todo: value,
-      checked: false
+      checked: false,
+      startTime: this.generateCurrentTime(),
+      endTime: ''
     }
 
     const isFirstStart = !this.todos.length;
@@ -123,4 +126,13 @@ export class Todolist {
     localStorage.setItem("tasks", JSON.stringify(this.todos));
     this.generateNewListItem(newItem, this.todos.length - 1);
   }
+
+  // Generate the current time
+  generateCurrentTime = () => {
+    let obj = {
+      time: new Date().toLocaleTimeString().slice(0,-3),
+      date: new Date().toLocaleDateString(),
+    }
+    return obj;
+  } 
 }
