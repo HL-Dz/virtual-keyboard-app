@@ -43,7 +43,7 @@ export class Todolist {
       this.emptyElem = createNode('div', 'todo__empty', str, this.todoWrapper);
     }
     document.body.prepend(this.overlay);
-    this.hideTodolist();
+    // this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
     return this;
   }
@@ -61,6 +61,18 @@ export class Todolist {
       this.item = createNode('div', 'item', null, this.wrapList,
       ['elem', ind + 1]
     )
+
+    // item Period
+    this.itemPeriod = createNode('div', 'item__period', null, this.item);
+      // itemStart
+      this.itemStart = createNode('div', 'item__start', null, this.itemPeriod);
+        this.startItemTime = createNode('div', 'item__start-time', '11:58', this.itemStart);
+        this.startItemDate = createNode('div', 'item__start-date', '30.11.2020',  this.itemStart);
+      // itemFinish
+      this.itemFinish = createNode('div', 'item__finish', null, this.itemPeriod);
+        this.finishItemTime = createNode('div', 'item__finish-time', '12:03', this.itemFinish);
+        this.finistItemDate = createNode('div', 'item__finish-date', '30.11.2020', this.itemFinish);
+
     
     // label
     this.label = createNode('label', 'item__label', null, this.item,
