@@ -1,4 +1,5 @@
 import createNode from './create-node.js';
+import generateCurrentTime from './current-time.js';
 
 
 export let tasks = [];
@@ -112,7 +113,7 @@ export class Todolist {
     let newItem = {
       todo: value,
       checked: false,
-      startTime: this.generateCurrentTime(),
+      startTime: generateCurrentTime(),
       endTime: ''
     }
 
@@ -126,13 +127,4 @@ export class Todolist {
     localStorage.setItem("tasks", JSON.stringify(this.todos));
     this.generateNewListItem(newItem, this.todos.length - 1);
   }
-
-  // Generate the current time
-  generateCurrentTime = () => {
-    let obj = {
-      time: new Date().toLocaleTimeString().slice(0,-3),
-      date: new Date().toLocaleDateString(),
-    }
-    return obj;
-  } 
 }
