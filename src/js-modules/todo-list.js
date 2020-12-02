@@ -46,6 +46,22 @@ export class Todolist {
     document.body.prepend(this.overlay);
     this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
+    this.wrapList.addEventListener('change', (e) => {
+      let target = e.target.closest('.item__label');
+      if(target) {
+        let forLabel = target.getAttribute('for');
+        let inputId = target.firstElementChild.getAttribute('id');
+        if(forLabel == inputId) {
+          let text = target.lastElementChild.textContent;
+          this.todos.forEach(elem => {
+            if(elem.todo === text) {
+              elem.checked = !elem.checked;
+              localStorage.setItem("tasks", JSON.stringify(this.todos)); 
+            }
+          })
+        }
+      }
+    })
     return this;
   }
 
