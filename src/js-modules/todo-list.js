@@ -46,22 +46,7 @@ export class Todolist {
     document.body.prepend(this.overlay);
     this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
-    this.wrapList.addEventListener('change', (e) => {
-      let target = e.target.closest('.item__label');
-      if(target) {
-        let forLabel = target.getAttribute('for');
-        let inputId = target.firstElementChild.getAttribute('id');
-        if(forLabel == inputId) {
-          let text = target.lastElementChild.textContent;
-          this.todos.forEach(elem => {
-            if(elem.todo === text) {
-              elem.checked = !elem.checked;
-              localStorage.setItem("tasks", JSON.stringify(this.todos)); 
-            }
-          })
-        }
-      }
-    })
+    this.wrapList.onchange =  this.completeTask;
     return this;
   }
 
@@ -87,9 +72,9 @@ export class Todolist {
         this.startItemTime = createNode('div', 'item__start-time', time, this.itemStart);
         this.startItemDate = createNode('div', 'item__start-date', date,  this.itemStart);
       // itemFinish
-      this.itemFinish = createNode('div', 'item__finish', null, this.itemPeriod);
-        this.finishItemTime = createNode('div', 'item__finish-time', '12:03', this.itemFinish);
-        this.finistItemDate = createNode('div', 'item__finish-date', '30.11.2020', this.itemFinish);
+      this.itemFinish = createNode('div', `${el.checked ? 'item__finish item__finish_display': 'item__finish'}`, null, this.itemPeriod);
+        this.finishItemTime = createNode('div', 'item__finish-time', el.endTime.time, this.itemFinish);
+        this.finistItemDate = createNode('div', 'item__finish-date', el.endTime.date, this.itemFinish);
 
     
     // label
@@ -102,7 +87,7 @@ export class Todolist {
       el.checked ? ['checked', ''] : ['checked', 'false'],
     )
     this.additional = createNode('span', 'additional', null, this.label);
-    this.itemText = createNode('span', 'item__text', el.todo, this.label);
+    this.itemText = createNode('span', `${el.checked ? 'item__text item__text_inactive' : 'item__text'}`, el.todo, this.label);
 
     // removeItem
     this.removeItem = createNode('div', 'item__remove', 
@@ -121,7 +106,7 @@ export class Todolist {
   }
 
   // Add a new list item
-  addNewItem(value){
+  addNewTask(value){
     if(!value) {
       return;
     }
@@ -142,5 +127,36 @@ export class Todolist {
     this.todos.push(newItem);
     localStorage.setItem("tasks", JSON.stringify(this.todos));
     this.generateNewListItem(newItem, this.todos.length - 1);
+  }
+
+  completeTask = (e) => {
+    let target = e.target.closest('.item__label');
+    if(target) {
+      let forLabel = target.getAttribute('for');
+      let inputId = target.firstElementChild.getAttribute('id');
+      let finishElem = target.previousSibling.lastElementChild;
+      let finishTime = finishElem.firstElementChild;
+      let finishDate = finishElem.lastElementChild;
+      if(forLabel == inputId) {
+        let text = target.lastElementChild.textContent;
+        this.todos.forEach(elem => {
+          if(elem.todo === text) {
+            elem.checked = !elem.checked;
+            elem.endTime = generateCurrentTime();
+            if(elem.checked) {
+              finishTime.innerHTML = elem.endTime.time;
+              finishDate.innerHTML = elem.endTime.date;
+              finishElem.classList.add('item__finish_display');
+              target.querySelector('.item__text').classList.add('item__text_inactive');
+            } else {
+              elem.endTime = '' ;
+              finishElem.classList.remove('item__finish_display');
+              target.querySelector('.item__text').classList.remove('item__text_inactive');
+            }
+            localStorage.setItem("tasks", JSON.stringify(this.todos));
+          }
+        })
+      }
+    }
   }
 }

@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(39, 41, 39, 0.308);
+  background: rgba(39, 41, 39, 0.164);
   transition: all 0.7s ease;
   z-index: 4;
   opacity: 1;
@@ -82,11 +82,11 @@
 .todo__title {
   text-align: center;
   font-size: 3.5rem;
-  color: rgb(221, 217, 217);
+  color: #c3c3c3;
   font-weight: bold;
 
   &_mod {
-    color: #7aeb7a;
+    color: #78c378;
   }
 }
 
@@ -115,17 +115,18 @@
 
 .item__start, .item__finish {
   display: flex;
-  padding: 3px;
-  border-radius: 4px;
-  // font-weight: bold;
-  font-size: 1rem;
+  padding: 3px 5px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: 'Open Sans';
+  font-size: 1.1rem;
+  box-shadow: 0 0 5px rgb(180, 179, 179) inset;
   @extend %transition;
-
 }
 
 .item__start {
-  background: #2b4f40;
-  color: rgb(221, 217, 217);
+  background: #0f4127;
+  color: rgb(201, 196, 196);
   margin-right: 15px;
   z-index: 2;
 }
@@ -142,9 +143,16 @@
 
 .item__finish {
   position: relative;
-  background: #5ef15e4f;
-  color: rgb(221, 217, 217);
-  display: none;
+  left: 24px;
+  color: #93ca93;
+  opacity: 0;
+  transition: all 0.5s ease;
+
+  &_display {
+    opacity: 1;
+    left: 0;
+  }
+
   &:before {
     content: '';
     position: absolute;
@@ -200,7 +208,12 @@
 .item__text {
   cursor: pointer;
   margin-top: 20px;
-  color: #fff;
+  color: #dcd9d9;
+  @extend %transition;
+
+  &_inactive {
+    color: rgba(190, 196, 190, 0.438);
+  }
 }
 
 .item__remove {

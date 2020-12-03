@@ -53,7 +53,7 @@ export default class Keyboard {
     this.allTasks.onclick = todolist.openTodolist;
 
     this.addTask.addEventListener('click', () => {
-      todolist.addNewItem(this.textarea.value);
+      todolist.addNewTask(this.textarea.value);
       this.textarea.value = '';
       this.textarea.focus();
     })
