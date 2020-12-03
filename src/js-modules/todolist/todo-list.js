@@ -1,5 +1,5 @@
-import createNode from './create-node.js';
-import generateCurrentTime from './current-time.js';
+import createNode from '../create-node.js';
+import generateCurrentTime from '../current-time.js';
 
 
 export let tasks = [];

@@ -1,8 +1,8 @@
-import createNode from './create-node.js';
-import * as storage from './storage.js';
-import language from './layouts/general.js'
+import createNode from '../create-node.js';
+import * as storage from '../local-storage/storage.js';
+import language from '../layouts/general.js'
 import Key from './Key.js';
-import { tasks, Todolist } from './todo-list.js';
+import { tasks, Todolist } from '../todolist/todo-list.js';
 
 const todolist = new Todolist(tasks).init();
 

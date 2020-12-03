@@ -1,4 +1,4 @@
-import createNode from './create-node.js';
+import createNode from '../create-node.js';
 
 
 export default class Key {
