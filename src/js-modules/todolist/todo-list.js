@@ -47,7 +47,8 @@ export class Todolist {
     document.body.prepend(this.overlay);
     this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
-    this.wrapList.onchange =  this.completeTask;
+    this.wrapList.addEventListener('change', this.completeTask);
+    this.wrapList.addEventListener('click', this.deleteTask);
     return this;
   }
 
@@ -106,7 +107,7 @@ export class Todolist {
     this.overlay.classList.remove('overlay_hide');
   }
 
-  // Add a new list item
+  // Add new task
   addNewTask(value){
     if(!value) {
       return;
@@ -128,9 +129,10 @@ export class Todolist {
 
     this.todos.push(newItem);
     localStorage.setItem("tasks", JSON.stringify(this.todos));
-    // this.createNewListItem(newItem);
+    this.createNewListItem(newItem);
   }
 
+  // Complete the task
   completeTask = (e) => {
     let target = e.target.closest('.item__label');
     if(target) {
@@ -159,6 +161,33 @@ export class Todolist {
           }
         })
       }
+    }
+  }
+
+  // Delete the task
+  deleteTask = (e) => {
+    let target = e.target;
+    let removeBtn = target.closest('.item__remove');
+    
+    if(removeBtn) {
+      let item = removeBtn.closest('.item');
+      let removeId = removeBtn.dataset.remove;
+      item.classList.add('item_hidden');
+      setTimeout(() => {
+        this.todos.forEach((elem,ind) => {
+          if(elem.id == removeId) {
+            this.todos.splice(ind, 1);
+            item.remove();
+            localStorage.setItem("tasks", JSON.stringify(this.todos));
+          }
+
+          if(!this.todos.length) {
+            this.emptyElem.classList.remove('todo__empty_hidden');
+          } else {
+            return;
+          }
+        })
+      }, 600);
     }
   }
 }
