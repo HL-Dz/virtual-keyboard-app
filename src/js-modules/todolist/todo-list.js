@@ -49,6 +49,7 @@ export class Todolist {
     this.closeBtn.onclick = this.hideTodolist;
     this.wrapList.addEventListener('change', this.completeTask);
     this.wrapList.addEventListener('click', this.deleteTask);
+    document.addEventListener('keydown', this.hideTodoByEscape);
     return this;
   }
 
@@ -100,6 +101,13 @@ export class Todolist {
   // Hide todoList
   hideTodolist = () => {
     this.overlay.classList.add('overlay_hide');
+  }
+
+  // Hide todolist by pressing
+  hideTodoByEscape = (e) => {
+    if(e.code === 'Escape') {
+      this.hideTodolist();
+    }
   }
 
   // Show todoList
