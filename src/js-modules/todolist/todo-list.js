@@ -1,5 +1,6 @@
 import createNode from '../create-node.js';
 import generateCurrentTime from '../current-time.js';
+import generateId from '../generate-id.js';
 
 
 export let tasks = [];
@@ -52,17 +53,17 @@ export class Todolist {
 
   // First render of list items
   renderListItems = () => {
-    this.todos.forEach((el,ind) => {
-      this.generateNewListItem(el,ind);
+    this.todos.forEach(elem => {
+      this.createNewListItem(elem);
     })
   }
 
   // Rendering a new list item
-  generateNewListItem = (el,ind) => {
-    const { time, date } = el.startTime;
+  createNewListItem = elem => {
+    const { time, date } = elem.startTime;
     // item
       this.item = createNode('div', 'item', null, this.wrapList,
-      ['elem', ind + 1]
+      ['elem', elem.id]
     )
 
     // item Period
@@ -72,27 +73,27 @@ export class Todolist {
         this.startItemTime = createNode('div', 'item__start-time', time, this.itemStart);
         this.startItemDate = createNode('div', 'item__start-date', date,  this.itemStart);
       // itemFinish
-      this.itemFinish = createNode('div', `${el.checked ? 'item__finish item__finish_display': 'item__finish'}`, null, this.itemPeriod);
-        this.finishItemTime = createNode('div', 'item__finish-time', el.endTime.time, this.itemFinish);
-        this.finistItemDate = createNode('div', 'item__finish-date', el.endTime.date, this.itemFinish);
+      this.itemFinish = createNode('div', `${elem.checked ? 'item__finish item__finish_display': 'item__finish'}`, null, this.itemPeriod);
+        this.finishItemTime = createNode('div', 'item__finish-time', elem.endTime.time, this.itemFinish);
+        this.finistItemDate = createNode('div', 'item__finish-date', elem.endTime.date, this.itemFinish);
 
     
     // label
     this.label = createNode('label', 'item__label', null, this.item,
-      ['for', ind + 1]
+      ['for', elem.id]
     )
     this.checkboxItem = createNode('input', 'item__input', null, this.label,
       ['type', 'checkbox'],
-      ['id', ind + 1],
-      el.checked ? ['checked', ''] : ['checked', 'false'],
+      ['id', elem.id],
+      elem.checked ? ['checked', ''] : ['checked', 'false'],
     )
     this.additional = createNode('span', 'additional', null, this.label);
-    this.itemText = createNode('span', `${el.checked ? 'item__text item__text_inactive' : 'item__text'}`, el.todo, this.label);
+    this.itemText = createNode('span', `${elem.checked ? 'item__text item__text_inactive' : 'item__text'}`, elem.todo, this.label);
 
     // removeItem
     this.removeItem = createNode('div', 'item__remove', 
       createNode('img', 'item__remove-img', null, null, ['src', './img/delete.png'], ['alt', 'Delete']),
-    this.item, ['remove', ind + 1])
+    this.item, ['remove', elem.id])
   }
 
   // Hide todoList
@@ -112,6 +113,7 @@ export class Todolist {
     }
 
     let newItem = {
+      id: generateId(),
       todo: value,
       checked: false,
       startTime: generateCurrentTime(),
@@ -126,7 +128,7 @@ export class Todolist {
 
     this.todos.push(newItem);
     localStorage.setItem("tasks", JSON.stringify(this.todos));
-    this.generateNewListItem(newItem, this.todos.length - 1);
+    // this.createNewListItem(newItem);
   }
 
   completeTask = (e) => {
