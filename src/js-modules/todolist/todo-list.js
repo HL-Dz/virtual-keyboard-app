@@ -9,6 +9,8 @@ if(localStorage.getItem("tasks")) {
   tasks = JSON.parse(localStorage.getItem("tasks"));
 }
 
+const isElems = JSON.parse(localStorage.getItem("tasks"));
+
 export class Todolist {
   constructor(todos){
     this.todos = todos;
@@ -35,15 +37,16 @@ export class Todolist {
 
     // wrapList 
     this.wrapList = createNode('div', 'wrapper__list', null, this.todoWrapper);
+
+    // emptyElem
+    let str = 'No tasks...';
+    this.emptyElem = createNode('div', `${isElems.length == 0 ? 'todo__empty' : 'todo__empty todo__empty_hidden'}`, str, this.todoWrapper);
     
     // items
     if(this.todos.length) {
       this.renderListItems();
-    } else {
-      let str = 'No tasks...'
-      // emptyElem
-      this.emptyElem = createNode('div', 'todo__empty', str, this.todoWrapper);
     }
+
     document.body.prepend(this.overlay);
     this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
@@ -187,15 +190,13 @@ export class Todolist {
             this.todos.splice(ind, 1);
             item.remove();
             localStorage.setItem("tasks", JSON.stringify(this.todos));
-          }
 
-          if(!this.todos.length) {
-            this.emptyElem.classList.remove('todo__empty_hidden');
-          } else {
-            return;
+            if(!this.todos.length) {
+              this.emptyElem.classList.remove('todo__empty_hidden');
+            }
           }
         })
-      }, 600);
+      }, 1000);
     }
   }
 }
