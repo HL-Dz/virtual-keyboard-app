@@ -9,7 +9,7 @@ if(localStorage.getItem("tasks")) {
   tasks = JSON.parse(localStorage.getItem("tasks"));
 }
 
-const isElems = JSON.parse(localStorage.getItem("tasks"));
+const isElems = JSON.parse(localStorage.getItem("tasks")) || [];
 
 export class Todolist {
   constructor(todos){
@@ -75,10 +75,15 @@ export class Todolist {
     this.itemPeriod = createNode('div', 'item__period', null, this.item);
       // itemStart
       this.itemStart = createNode('div', 'item__start', null, this.itemPeriod);
+        this.itemStartInfo = createNode('div', 'item__start-popup', `Task added: ${time} ${date}`, this.itemStart);
+        this.itemStartTriangle = createNode('div', 'item__start-triangle', '', this.itemStartInfo);
         this.startItemTime = createNode('div', 'item__start-time', time, this.itemStart);
         this.startItemDate = createNode('div', 'item__start-date', date,  this.itemStart);
       // itemFinish
       this.itemFinish = createNode('div', `${elem.checked ? 'item__finish item__finish_display': 'item__finish'}`, null, this.itemPeriod);
+        // let complteStrResult = `Task completed: ${elem.endTime.time} ${elem.endTime.date}`;
+        this.itemFinishInfo = createNode('div', 'item__finish-popup', `Task completd: ${elem.endTime.time} ${elem.endTime.date}`, this.itemFinish);
+        this.itemFinishTriangle = createNode('div', 'item__finish-triangle', '', this.itemFinishInfo);
         this.finishItemTime = createNode('div', 'item__finish-time', elem.endTime.time, this.itemFinish);
         this.finistItemDate = createNode('div', 'item__finish-date', elem.endTime.date, this.itemFinish);
 
@@ -150,8 +155,9 @@ export class Todolist {
       let forLabel = target.getAttribute('for');
       let inputId = target.firstElementChild.getAttribute('id');
       let finishElem = target.previousSibling.lastElementChild;
-      let finishTime = finishElem.firstElementChild;
-      let finishDate = finishElem.lastElementChild;
+      let finishTime = finishElem.querySelector('.item__finish-time');
+      let finishDate = finishElem.querySelector('.item__finish-date');
+      let finishPopup = finishElem.querySelector('.item__finish-popup');
       if(forLabel == inputId) {
         let text = target.lastElementChild.textContent;
         this.todos.forEach(elem => {
@@ -161,6 +167,8 @@ export class Todolist {
             if(elem.checked) {
               finishTime.innerHTML = elem.endTime.time;
               finishDate.innerHTML = elem.endTime.date;
+              finishPopup.innerHTML = `Task completed: ${elem.endTime.time} ${elem.endTime.date}`;
+              finishPopup.append(this.itemFinishTriangle);
               finishElem.classList.add('item__finish_display');
               target.querySelector('.item__text').classList.add('item__text_inactive');
             } else {

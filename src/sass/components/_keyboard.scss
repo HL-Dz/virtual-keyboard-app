@@ -12,6 +12,11 @@
   box-shadow: 0 0 50px rgba(77, 78, 77, 0.4);
   z-index: 3;
   @extend %transition-keyboard;
+  opacity: 1;
+
+  &_inactive {
+    opacity: 0;
+  }
 
   &_hidden {
     bottom: -100%;
