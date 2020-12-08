@@ -47,6 +47,10 @@ export class Todolist {
       this.renderListItems();
     }
 
+    // Message for empty field
+    this.message = createNode('div', 'message', null, document.body);
+    const textMessage = createNode('div', 'message__text', 'Empty value!', this.message);
+
     document.body.prepend(this.overlay);
     this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
@@ -125,6 +129,7 @@ export class Todolist {
   // Add new task
   addNewTask(value){
     if(!value) {
+      this.showMessage();
       return;
     }
 
@@ -145,6 +150,13 @@ export class Todolist {
     this.todos.push(newItem);
     localStorage.setItem("tasks", JSON.stringify(this.todos));
     this.createNewListItem(newItem);
+  }
+
+  showMessage = () => {
+    this.message.classList.add('message_active');
+    setTimeout(() => {
+      this.message.classList.remove('message_active');
+    }, 1500);
   }
 
   // Complete the task

@@ -1,3 +1,32 @@
+.message {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(214, 103, 103, 0.918);
+  max-width: 300px;
+  width: 100%;
+  max-height: 150px;
+  height: 50px;
+  border-radius: 5px;
+  padding: 0 20px;
+  z-index: 3;
+  transition: all 0.5s ease;
+
+  &_active {
+    animation: message-elem 1.7s ease-in-out;
+  }
+}
+
+.message__text {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 50px;
+  text-align: center;
+}
+
+
 .overlay {
   position: fixed;
   top: 0;
@@ -329,5 +358,23 @@
   100% {
     width: 20px;
     height: 20px;
+  }
+}
+
+@keyframes message-elem {
+  0% {
+    top: -100px;
+  }
+  25% {
+    top: 40px;
+  }
+  50% {
+    top: 40px;
+  }
+  75% {
+    top: 40px;
+  }
+  100% {
+    top: -100px
   }
 }
