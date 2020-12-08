@@ -81,8 +81,7 @@ export class Todolist {
         this.startItemDate = createNode('div', 'item__start-date', date,  this.itemStart);
       // itemFinish
       this.itemFinish = createNode('div', `${elem.checked ? 'item__finish item__finish_display': 'item__finish'}`, null, this.itemPeriod);
-        // let complteStrResult = `Task completed: ${elem.endTime.time} ${elem.endTime.date}`;
-        this.itemFinishInfo = createNode('div', 'item__finish-popup', `Task completd: ${elem.endTime.time} ${elem.endTime.date}`, this.itemFinish);
+        this.itemFinishInfo = createNode('div', 'item__finish-popup', `Task completed: ${elem.endTime.time} ${elem.endTime.date}`, this.itemFinish);
         this.itemFinishTriangle = createNode('div', 'item__finish-triangle', '', this.itemFinishInfo);
         this.finishItemTime = createNode('div', 'item__finish-time', elem.endTime.time, this.itemFinish);
         this.finistItemDate = createNode('div', 'item__finish-date', elem.endTime.date, this.itemFinish);
