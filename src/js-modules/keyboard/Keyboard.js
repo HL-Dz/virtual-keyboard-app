@@ -20,7 +20,10 @@ export default class Keyboard {
   init(langCode){
     this.currentLayout = language[langCode];
     this.allTasks = createNode('button', 'show-tasks', 'Show all tasks', container);
-    this.textarea = createNode('textarea', 'output-field', null, container,
+    const textareaWrap = createNode('div', 'output-wrap', null, container);
+    this.preloader = createNode('div', 'preloader', null, textareaWrap);
+    this.preloaderElem = createNode('div', 'preloader__elem', null, this.preloader);
+    this.textarea = createNode('textarea', 'output-field', null, textareaWrap,
       ['rows', 4],
       ['cols', 50],
       ['placeholder', `Set focus here or press any key and start typing the task...\nUse Ctrl + Alt to switch language`],
@@ -54,7 +57,7 @@ export default class Keyboard {
 
     this.addTask.addEventListener('click', () => {
       todolist.addNewTask(this.textarea.value);
-      this.textarea.value = '';
+      // this.textarea.value = '';
       this.textarea.focus();
     })
   }

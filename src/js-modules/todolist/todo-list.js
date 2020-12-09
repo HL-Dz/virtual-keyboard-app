@@ -129,29 +129,48 @@ export class Todolist {
   // Add new task
   addNewTask(value){
     if(!value) {
-      this.showMessage();
-      return;
-    }
+        this.showMessage();
+        return;
+      } else {
+        new Promise(resolve=> {
 
-    let newItem = {
-      id: generateId(),
-      todo: value,
-      checked: false,
-      startTime: generateCurrentTime(),
-      endTime: ''
-    }
-
-    const isFirstStart = !this.todos.length;
-
-    if(isFirstStart) {
-      this.emptyElem.classList.add('todo__empty_hidden');
-    }
-
-    this.todos.push(newItem);
-    localStorage.setItem("tasks", JSON.stringify(this.todos));
-    this.createNewListItem(newItem);
+          document.querySelector('.preloader').classList.add('preloader_active');
+          document.querySelector('.add-task').setAttribute('disabled', '');
+          document.querySelector('.show-tasks').setAttribute('disabled', '');
+          
+          setTimeout(() => {
+            document.querySelector('.preloader').classList.remove('preloader_active');
+            document.querySelector('.add-task').removeAttribute('disabled');
+            document.querySelector('.show-tasks').removeAttribute('disabled');
+            document.querySelector('.output-field').value = '';
+          }, 1500);
+      
+          resolve();
+          })
+          .then(() => {
+        
+            let newItem = {
+              id: generateId(),
+              todo: value,
+              checked: false,
+              startTime: generateCurrentTime(),
+              endTime: ''
+            }
+        
+            const isFirstStart = !this.todos.length;
+        
+            if(isFirstStart) {
+              this.emptyElem.classList.add('todo__empty_hidden');
+            }
+        
+            this.todos.push(newItem);
+            localStorage.setItem("tasks", JSON.stringify(this.todos));
+            this.createNewListItem(newItem);
+          })
+      }
   }
 
+  // Show message for empty field
   showMessage = () => {
     this.message.classList.add('message_active');
     setTimeout(() => {
