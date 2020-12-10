@@ -128,21 +128,29 @@ export class Todolist {
 
   // Add new task
   addNewTask(value){
+    let preloader = document.querySelector('.preloader');
+    let addTaskBtn = document.querySelector('.add-task');
+    let showTaskBtn = document.querySelector('.show-tasks');
+    let outputField = document.querySelector('.output-field');
     if(!value) {
         this.showMessage();
+          addTaskBtn.setAttribute('disabled', '');
+        setTimeout(() => {
+          addTaskBtn.removeAttribute('disabled');
+        }, 2000);
         return;
       } else {
         new Promise(resolve=> {
 
-          document.querySelector('.preloader').classList.add('preloader_active');
-          document.querySelector('.add-task').setAttribute('disabled', '');
-          document.querySelector('.show-tasks').setAttribute('disabled', '');
-          
+          preloader.classList.add('preloader_active');
+          addTaskBtn.setAttribute('disabled', '');
+          showTaskBtn.setAttribute('disabled', '');
+
           setTimeout(() => {
-            document.querySelector('.preloader').classList.remove('preloader_active');
-            document.querySelector('.add-task').removeAttribute('disabled');
-            document.querySelector('.show-tasks').removeAttribute('disabled');
-            document.querySelector('.output-field').value = '';
+            preloader.classList.remove('preloader_active');
+            addTaskBtn.removeAttribute('disabled');
+            showTaskBtn.removeAttribute('disabled');
+            outputField.value = '';
           }, 1500);
       
           resolve();
@@ -175,7 +183,7 @@ export class Todolist {
     this.message.classList.add('message_active');
     setTimeout(() => {
       this.message.classList.remove('message_active');
-    }, 1500);
+    }, 2000);
   }
 
   // Complete the task

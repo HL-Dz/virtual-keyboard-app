@@ -1,28 +1,38 @@
 .message {
   position: fixed;
-  top: -100px;
+  top: -30%;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(214, 103, 103, 0.918);
   max-width: 300px;
-  width: 100%;
-  max-height: 150px;
-  height: 50px;
+  width: 75.5%;
+  height: 70px;
   border-radius: 5px;
-  padding: 0 20px;
   z-index: 3;
   transition: all 0.5s ease;
+  box-shadow: 0 0 10px rgb(177, 180, 178);
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 99.5%;
+    left: 50%;
+    width: 2px;
+    height: 300px;
+    background: rgb(145, 142, 142);
+    box-shadow: 0 0 10px rgb(177, 180, 178);
+  }
 
   &_active {
-    animation: message-elem 1.7s ease-in-out;
+    animation: message-elem 1.9s ease-in-out;
   }
 }
 
 .message__text {
   color: #fff;
   font-weight: bold;
-  font-size: 1.8rem;
-  line-height: 50px;
+  font-size: 2rem;
+  line-height: 70px;
   text-align: center;
 }
 
@@ -51,7 +61,7 @@
 .todo {
   position: relative;
   background: rgb(3,1,14);
-  background: linear-gradient(310deg, rgba(3,1,14,1) 0%, rgba(18,83,46,1) 100%);
+  background: linear-gradient(310deg, rgba(3,1,14, 0.9) 0%, rgba(18, 83, 46, 0.9) 100%);
   width: 95%;
   max-width: 1100px;
   max-height: 95%;
@@ -363,18 +373,19 @@
 
 @keyframes message-elem {
   0% {
-    top: -100px;
-  }
-  25% {
-    top: 40px;
+    top: -30%;
+    transform: translateX(-50%);
   }
   50% {
-    top: 40px;
+    top: 20%;
   }
-  75% {
-    top: 40px;
+  70%{
+    top: 10%;
+  }
+  90% {
+    top: 20%;
   }
   100% {
-    top: -100px
+    top: -30%;
   }
 }
