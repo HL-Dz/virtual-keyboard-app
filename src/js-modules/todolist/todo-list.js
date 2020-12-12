@@ -50,14 +50,18 @@ export class Todolist {
     // Message for empty field
     this.message = createNode('div', 'message', null, document.body);
     const textMessage = createNode('div', 'message__text', 'Empty value!', this.message);
-
     document.body.prepend(this.overlay);
     this.hideTodolist();
+    this.bindEvents();
+    return this;
+  }
+
+  // List Events
+  bindEvents = () => {
     this.closeBtn.onclick = this.hideTodolist;
     this.wrapList.addEventListener('change', this.completeTask);
     this.wrapList.addEventListener('click', this.showModalToConfirm);
     document.addEventListener('keydown', this.hideTodoByEscape);
-    return this;
   }
 
 
