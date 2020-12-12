@@ -55,10 +55,11 @@ export class Todolist {
     this.hideTodolist();
     this.closeBtn.onclick = this.hideTodolist;
     this.wrapList.addEventListener('change', this.completeTask);
-    this.wrapList.addEventListener('click', this.deleteTask);
+    this.wrapList.addEventListener('click', this.showModalToConfirm);
     document.addEventListener('keydown', this.hideTodoByEscape);
     return this;
   }
+
 
   // First render of list items
   renderListItems = () => {
@@ -71,9 +72,15 @@ export class Todolist {
   createNewListItem = elem => {
     const { time, date } = elem.startTime;
     // item
-      this.item = createNode('div', 'item', null, this.wrapList,
-      ['elem', elem.id]
-    )
+    this.item = createNode('div', 'item', null, this.wrapList, ['elem', elem.id]);
+
+    // confirmDeletionTask
+    this.confirmDel = createNode('div', 'item__confirm-del', null, this.item, ['confirm', elem.id]);
+      this.confirmText = createNode('div', 'confirm-text', 'Delete the task?', this.confirmDel);
+      this.confirmButtons = createNode('div', 'confirm-buttons', null, this.confirmDel)
+        this.confirmBtn = createNode('button', 'confirm-item', 'Ок', this.confirmButtons, ['confirmed', elem.id]);
+        this.cancelConfBtn = createNode('button', 'confirm-cancel', 'Cancel', this.confirmButtons);
+
 
     // item Period
     this.itemPeriod = createNode('div', 'item__period', null, this.item);
@@ -128,6 +135,7 @@ export class Todolist {
 
   // Add new task
   addNewTask(value){
+    value = value.trim();
     let preloader = document.querySelector('.preloader');
     let addTaskBtn = document.querySelector('.add-task');
     let showTaskBtn = document.querySelector('.show-tasks');
@@ -221,28 +229,44 @@ export class Todolist {
     }
   }
 
-  // Delete the task
-  deleteTask = (e) => {
+  // Show modal to confirm delete the task
+  showModalToConfirm = (e) => {
     let target = e.target;
     let removeBtn = target.closest('.item__remove');
-    
+
     if(removeBtn) {
       let item = removeBtn.closest('.item');
-      let removeId = removeBtn.dataset.remove;
-      item.classList.add('item_hidden');
-      setTimeout(() => {
-        this.todos.forEach((elem,ind) => {
-          if(elem.id == removeId) {
-            this.todos.splice(ind, 1);
-            item.remove();
-            localStorage.setItem("tasks", JSON.stringify(this.todos));
+      let itemConfirmElem = item.querySelector('.item__confirm-del');
+      let cancelBtn = itemConfirmElem.querySelector('.confirm-cancel');
+      let confirmItemDel = itemConfirmElem.querySelector('.confirm-item');
+      itemConfirmElem.classList.add('item__confirm-del_active');
 
-            if(!this.todos.length) {
-              this.emptyElem.classList.remove('todo__empty_hidden');
+      // Hide modal to confirm delete the task
+      cancelBtn.onclick = (e) => {
+        itemConfirmElem.classList.remove('item__confirm-del_active');
+      }
+
+      // Delete the task
+      confirmItemDel.onclick = () => {
+        let confirmedId = confirmItemDel.dataset.confirmed;
+        itemConfirmElem.classList.add('item__confirm-del_active-bottom');
+        setTimeout(() => {
+          item.classList.add('item_hidden');
+        }, 500);
+        setTimeout(() => {
+          this.todos.forEach((elem,ind) => {
+            if(elem.id == confirmedId) {
+              this.todos.splice(ind, 1);
+              item.remove();
+              localStorage.setItem("tasks", JSON.stringify(this.todos));
+  
+              if(!this.todos.length) {
+                this.emptyElem.classList.remove('todo__empty_hidden');
+              }
             }
-          }
-        })
-      }, 1000);
+          })
+        }, 1000);
+      }
     }
   }
 }

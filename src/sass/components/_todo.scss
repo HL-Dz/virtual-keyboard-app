@@ -137,8 +137,11 @@
   display: flex;
   align-items: center;
   padding: 20px 0;
+  overflow: hidden;
   border-bottom: 1px solid #2a4b36;
   transition: all 1s ease;
+  border-radius: 5px;
+  z-index: 1;
 
   &_hidden {
     opacity: 0;
@@ -184,6 +187,59 @@
   &:last-child {
     border-bottom: none;
   }
+}
+
+.item__confirm-del {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  right: 100%;
+  opacity: 0;
+  background: #1a2d2bfd;
+  border-radius: 5px;
+  z-index: 3;
+  transition: all 0.5s ease;
+
+  &_active {
+    opacity: 1;
+    z-index: 3;
+    right: 0;
+  }
+
+  &_active-bottom {
+    bottom: 100%;
+    opacity: 0;
+    animation: modal-up 0.5s ease;
+  }
+}
+
+.confirm-text {
+  color: #e4e0e0;
+  margin-bottom: 15px;
+}
+
+.confirm-item, .confirm-cancel  {
+  height: 25px;
+  border: none;
+  outline: none;
+  padding: 0 15px;
+  font-family: 'Roboto';
+  border-radius: 2px;
+  background: rgba(143, 173, 170, 0.315);
+  color: rgb(228, 224, 224);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(156, 204, 199, 0.541);
+  }
+}
+
+.confirm-item {
+  margin-right: 10px;
 }
 
 .item__period {
@@ -387,5 +443,14 @@
   }
   100% {
     top: -30%;
+  }
+}
+
+@keyframes modal-up{
+  0% {
+    bottom: 0;
+  }
+  100% {
+    bottom: 105%;
   }
 }
