@@ -59,7 +59,7 @@ export class Todolist {
   // List Events
   bindEvents = () => {
     this.closeBtn.onclick = this.hideTodolist;
-    this.wrapList.addEventListener('change', this.completeTask);
+    this.wrapList.addEventListener('change', this.showModalToComplete);
     this.wrapList.addEventListener('click', this.showModalToConfirm);
     document.addEventListener('keydown', this.hideTodoByEscape);
   }
@@ -79,11 +79,18 @@ export class Todolist {
     this.item = createNode('div', 'item', null, this.wrapList, ['elem', elem.id]);
 
     // confirmDeletionTask
-    this.confirmDel = createNode('div', 'item__confirm-del', null, this.item, ['confirm', elem.id]);
-      this.confirmText = createNode('div', 'confirm-text', 'Delete the task?', this.confirmDel);
-      this.confirmButtons = createNode('div', 'confirm-buttons', null, this.confirmDel)
-        this.confirmBtn = createNode('button', 'confirm-item', 'Ок', this.confirmButtons, ['confirmed', elem.id]);
+    this.confirmDel = createNode('div', 'item__confirm-modal', null, this.item, ['confirm', elem.id]);
+      this.confirmText = createNode('div', 'confirm-text', 'Delete task?', this.confirmDel);
+      this.confirmButtons = createNode('div', 'confirm-buttons', null, this.confirmDel);
+        this.confirmBtn = createNode('button', 'confirm-btn', 'Ок', this.confirmButtons, ['confirmed', elem.id]);
         this.cancelConfBtn = createNode('button', 'confirm-cancel', 'Cancel', this.confirmButtons);
+
+    // taskCompletionModal
+    this.completionModal = createNode('div', 'item__completion-modal', null, this.item);
+      this.completionText = createNode('div', 'completion-text', 'Complete task?',this.completionModal);
+      this.completionsButtons = createNode('div', 'completion-buttons', null, this.completionModal);
+        this.completionBtn = createNode('button', 'completion-btn', 'Ок', this.completionsButtons, ['action', elem.id]);
+        this.cancelCompletionBtn = createNode('button', 'completion-cancel', 'Cancel', this.completionsButtons, ['elem', elem.id]);
 
 
     // item Period
@@ -110,9 +117,12 @@ export class Todolist {
       ['type', 'checkbox'],
       ['id', elem.id],
       elem.checked ? ['checked', ''] : ['checked', 'false'],
+      elem.disabled ? ['disabled', ''] : ['disabled', 'false']
     )
-    this.additional = createNode('span', 'additional', null, this.label);
-    this.itemText = createNode('span', `${elem.checked ? 'item__text item__text_inactive' : 'item__text'}`, elem.todo, this.label);
+    this.additional = createNode('span', `${elem.checked ? 'additional additional_active' : 'additional'}`, null, this.label,);
+    this.itemText = createNode('span', `${elem.checked ? 'item__text item__text_inactive' : 'item__text'}`, elem.todo, this.label,
+      elem.checked ? ['title', 'Task completed.'] : ['title', '']
+    );
 
     // removeItem
     this.removeItem = createNode('div', 'item__remove', 
@@ -173,6 +183,7 @@ export class Todolist {
               id: generateId(),
               todo: value,
               checked: false,
+              disabled: false,
               startTime: generateCurrentTime(),
               endTime: ''
             }
@@ -199,40 +210,6 @@ export class Todolist {
   }
 
   // Complete the task
-  completeTask = (e) => {
-    let target = e.target.closest('.item__label');
-    if(target) {
-      let forLabel = target.getAttribute('for');
-      let inputId = target.firstElementChild.getAttribute('id');
-      let finishElem = target.previousSibling.lastElementChild;
-      let finishTime = finishElem.querySelector('.item__finish-time');
-      let finishDate = finishElem.querySelector('.item__finish-date');
-      let finishPopup = finishElem.querySelector('.item__finish-popup');
-      if(forLabel == inputId) {
-        let text = target.lastElementChild.textContent;
-        this.todos.forEach(elem => {
-          if(elem.todo === text) {
-            elem.checked = !elem.checked;
-            elem.endTime = generateCurrentTime();
-            if(elem.checked) {
-              finishTime.innerHTML = elem.endTime.time;
-              finishDate.innerHTML = elem.endTime.date;
-              finishPopup.innerHTML = `Task completed: ${elem.endTime.time} ${elem.endTime.date}`;
-              finishPopup.append(this.itemFinishTriangle);
-              finishElem.classList.add('item__finish_display');
-              target.querySelector('.item__text').classList.add('item__text_inactive');
-            } else {
-              elem.endTime = '' ;
-              finishElem.classList.remove('item__finish_display');
-              target.querySelector('.item__text').classList.remove('item__text_inactive');
-            }
-            localStorage.setItem("tasks", JSON.stringify(this.todos));
-          }
-        })
-      }
-    }
-  }
-
   // Show modal to confirm delete the task
   showModalToConfirm = (e) => {
     let target = e.target;
@@ -240,20 +217,20 @@ export class Todolist {
 
     if(removeBtn) {
       let item = removeBtn.closest('.item');
-      let itemConfirmElem = item.querySelector('.item__confirm-del');
+      let itemConfirmElem = item.querySelector('.item__confirm-modal');
       let cancelBtn = itemConfirmElem.querySelector('.confirm-cancel');
-      let confirmItemDel = itemConfirmElem.querySelector('.confirm-item');
-      itemConfirmElem.classList.add('item__confirm-del_active');
+      let confirmItemDel = itemConfirmElem.querySelector('.confirm-btn');
+      itemConfirmElem.classList.add('item__confirm-modal_active');
 
       // Hide modal to confirm delete the task
       cancelBtn.onclick = (e) => {
-        itemConfirmElem.classList.remove('item__confirm-del_active');
+        itemConfirmElem.classList.remove('item__confirm-modal_active');
       }
 
       // Delete the task
       confirmItemDel.onclick = () => {
         let confirmedId = confirmItemDel.dataset.confirmed;
-        itemConfirmElem.classList.add('item__confirm-del_active-bottom');
+        itemConfirmElem.classList.add('item__confirm-modal_active-bottom');
         setTimeout(() => {
           item.classList.add('item_hidden');
         }, 500);
@@ -271,6 +248,68 @@ export class Todolist {
           })
         }, 1000);
       }
+    }
+  }
+
+  // Show modal to task complete
+  showModalToComplete = (e) => {
+    let itemLabel = e.target.closest('.item__label');
+    let item = itemLabel.closest('.item');
+    let input = itemLabel.querySelector('.item__input');
+    let modal = item.querySelector('.item__completion-modal');
+    let cancelBtn = item.querySelector('.completion-cancel');
+    let completionBtn = item.querySelector('.completion-btn');
+    itemLabel.querySelector('.item__input').checked = true;
+
+    if(itemLabel) {
+      modal.classList.add('item__completion-modal_active');
+
+      // Hide modal window
+      cancelBtn.addEventListener('click', () => {
+        input.checked = false;
+        modal.classList.remove('item__completion-modal_active');
+      })
+
+      // Complete the task.
+      completionBtn.addEventListener('click', () => {
+        let forLabel = itemLabel.getAttribute('for');
+        let inputId = input.getAttribute('id');
+        let finishElem = item.querySelector('.item__finish');
+        let finishTime = finishElem.querySelector('.item__finish-time');
+        let finishDate = finishElem.querySelector('.item__finish-date');
+        let finishPopup = finishElem.querySelector('.item__finish-popup');
+
+        modal.classList.add('item__completion-modal_active-top');
+
+      
+        setTimeout(() => {
+          if(forLabel == inputId) {
+            let text = itemLabel.querySelector('.item__text').textContent;
+            let additional = itemLabel.querySelector('.additional');
+            additional.classList.add('additional_active');
+            
+            this.todos.forEach(elem => {
+              if(elem.todo === text) {
+                elem.checked = true;
+                elem.disabled = true;
+                elem.endTime = generateCurrentTime();
+                if(elem.checked) {
+                  finishTime.innerHTML = elem.endTime.time;
+                  finishDate.innerHTML = elem.endTime.date;
+                  finishPopup.innerHTML = `Task completed: ${elem.endTime.time} ${elem.endTime.date}`;
+                  finishElem.classList.add('item__finish_display');
+                  itemLabel.querySelector('.item__text').classList.add('item__text_inactive');
+                } else {
+                  elem.endTime = '' ;
+                  finishElem.classList.remove('item__finish_display');
+                  itemLabel.querySelector('.item__text').classList.remove('item__text_inactive');
+                }
+                localStorage.setItem("tasks", JSON.stringify(this.todos));
+              }
+            })
+          }
+        }, 300);
+      })
     }
   }
 }
