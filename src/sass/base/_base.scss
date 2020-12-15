@@ -50,19 +50,35 @@ h6 {
   color: rgb(160, 158, 158);
   font-size: 1.8rem;
   font-family: 'Montserrat Alternates', sans-serif;
+
+  @include media-mobile {
+    font-size: 1.5rem;
+  }
 }
 ::-moz-placeholder {
   color: rgb(160, 158, 158);
   font-size: 1.8rem;
   font-family: 'Montserrat Alternates', sans-serif;
+
+  @include media-mobile {
+    font-size: 1.5rem;
+  }
 }
 :-ms-input-placeholder {
   color: rgb(160, 158, 158);
   font-size: 1.8rem;
   font-family: 'Montserrat Alternates', sans-serif;
+
+  @include media-mobile {
+    font-size: 1.5rem;
+  }
 }
 :-moz-placeholder {
   color: rgb(160, 158, 158);
   font-size: 1.8rem;
   font-family: 'Montserrat Alternates', sans-serif;
+
+  @include media-mobile {
+    font-size: 1.5rem;
+  }
 }

@@ -49,6 +49,10 @@
   height: 90px;
   max-height: 90px;
   margin: 0 auto;
+
+  @include media-mobile {
+    width: 100%;
+  }
 }
 
 
@@ -70,4 +74,8 @@
   outline: none;
   padding: 5px;
   z-index: 2;
+
+  @include media-mobile {
+    font-size: 1.5rem;;
+  }
 }
