@@ -1,6 +1,7 @@
 import createNode from '../create-node.js';
 import generateCurrentTime from '../current-time.js';
 import generateId from '../generate-id.js';
+import { generateItem } from './components/task.js';
 
 
 export let tasks = [];
@@ -74,60 +75,7 @@ export class Todolist {
 
   // Rendering a new list item
   createNewListItem = elem => {
-    const { time, date } = elem.startTime;
-    // item
-    this.item = createNode('div', 'item', null, this.wrapList, ['elem', elem.id]);
-
-    // confirmDeletionTask
-    this.confirmDel = createNode('div', 'item__confirm-modal', null, this.item, ['confirm', elem.id]);
-      this.confirmText = createNode('div', 'confirm-text', 'Delete task?', this.confirmDel);
-      this.confirmButtons = createNode('div', 'confirm-buttons', null, this.confirmDel);
-        this.confirmBtn = createNode('button', 'confirm-btn', 'Ок', this.confirmButtons, ['confirmed', elem.id]);
-        this.cancelConfBtn = createNode('button', 'confirm-cancel', 'Cancel', this.confirmButtons);
-
-    // taskCompletionModal
-    this.completionModal = createNode('div', 'item__completion-modal', null, this.item);
-      this.completionText = createNode('div', 'completion-text', 'Complete task?',this.completionModal);
-      this.completionsButtons = createNode('div', 'completion-buttons', null, this.completionModal);
-        this.completionBtn = createNode('button', 'completion-btn', 'Ок', this.completionsButtons, ['action', elem.id]);
-        this.cancelCompletionBtn = createNode('button', 'completion-cancel', 'Cancel', this.completionsButtons, ['elem', elem.id]);
-
-
-    // item Period
-    this.itemPeriod = createNode('div', 'item__period', null, this.item);
-      // itemStart
-      this.itemStart = createNode('div', 'item__start', null, this.itemPeriod);
-        this.itemStartInfo = createNode('div', 'item__start-popup', `Task added: ${time} ${date}`, this.itemStart);
-        this.itemStartTriangle = createNode('div', 'item__start-triangle', '', this.itemStartInfo);
-        this.startItemTime = createNode('div', 'item__start-time', time, this.itemStart);
-        this.startItemDate = createNode('div', 'item__start-date', date,  this.itemStart);
-      // itemFinish
-      this.itemFinish = createNode('div', `${elem.checked ? 'item__finish item__finish_display': 'item__finish'}`, null, this.itemPeriod);
-        this.itemFinishInfo = createNode('div', 'item__finish-popup', `Task completed: ${elem.endTime.time} ${elem.endTime.date}`, this.itemFinish);
-        this.itemFinishTriangle = createNode('div', 'item__finish-triangle', '', this.itemFinishInfo);
-        this.finishItemTime = createNode('div', 'item__finish-time', elem.endTime.time, this.itemFinish);
-        this.finistItemDate = createNode('div', 'item__finish-date', elem.endTime.date, this.itemFinish);
-
-    
-    // label
-    this.label = createNode('label', 'item__label', null, this.item,
-      ['for', elem.id]
-    )
-    this.checkboxItem = createNode('input', 'item__input', null, this.label,
-      ['type', 'checkbox'],
-      ['id', elem.id],
-      elem.checked ? ['checked', ''] : ['checked', 'false'],
-      elem.disabled ? ['disabled', ''] : ['disabled', 'false']
-    )
-    this.additional = createNode('span', `${elem.checked ? 'additional additional_active' : 'additional'}`, null, this.label,);
-    this.itemText = createNode('span', `${elem.checked ? 'item__text item__text_inactive' : 'item__text'}`, elem.todo, this.label,
-      elem.checked ? ['title', 'Task completed.'] : ['title', '']
-    );
-
-    // removeItem
-    this.removeItem = createNode('div', 'item__remove', 
-      createNode('img', 'item__remove-img', null, null, ['src', './img/delete.png'], ['alt', 'Delete']),
-    this.item, ['remove', elem.id])
+    this.item = createNode('div', 'item', generateItem(elem), this.wrapList, ['elem', elem.id]);
   }
 
   // Hide todoList
@@ -209,7 +157,6 @@ export class Todolist {
     }, 2000);
   }
 
-  // Complete the task
   // Show modal to confirm delete the task
   showModalToConfirm = (e) => {
     let target = e.target;

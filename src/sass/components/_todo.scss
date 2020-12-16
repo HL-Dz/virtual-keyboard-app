@@ -490,6 +490,12 @@
   max-width: 30px;
   max-height: auto;
   transition: all 0.2s ease-in-out;
+
+  @include media-mobile {
+    top: 0%;
+    transform: translateX(-50%);
+  }
+
 }
 
 .todo__empty {
