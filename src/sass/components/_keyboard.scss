@@ -25,6 +25,10 @@
   @include media-tablet {
     padding: 15px 5px ;
   }
+
+  @include media-mobile {
+    display: none;
+  }
 }
 
 .keyboard__line {
@@ -76,6 +80,6 @@
   z-index: 2;
 
   @include media-mobile {
-    font-size: 1.5rem;;
+    font-size: 1.5rem;
   }
 }
