@@ -224,6 +224,7 @@
     align-items: flex-start;
     padding-top: 15px;
     border-radius: 0px;
+    margin-top: 0px;
     animation: show-elem 1s ease;
     border: 1px solid rgb(56, 73, 72);
     border-radius: 5px;
@@ -630,7 +631,10 @@
 @keyframes show-elem {
   0% {
     opacity: 0;
-    margin-top: -205px;
+    margin-top: -100px;
+  }
+  50% {
+    margin-top: 0px;
   }
   100% {
     opacity: 1;

@@ -75,7 +75,8 @@ export class Todolist {
 
   // Rendering a new list item
   createNewListItem = elem => {
-    this.item = createNode('div', 'item', generateItem(elem), this.wrapList, ['elem', elem.id]);
+    this.item = generateItem(elem);
+    this.wrapList.prepend(this.item);
   }
 
   // Hide todoList

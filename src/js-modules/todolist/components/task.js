@@ -46,5 +46,9 @@ export const generateItem = ( elem ) => {
     <img class="item__remove-img" src="./img/delete.png" alt="Delete" />
   </div>
 `
-  return template;
+  const element = document.createElement('div');
+  element.classList.add('item');
+  element.setAttribute('data-elem', elem.id);
+  element.innerHTML = template;
+  return element;
 };
