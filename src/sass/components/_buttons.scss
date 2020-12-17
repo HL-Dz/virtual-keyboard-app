@@ -252,6 +252,10 @@
     height: 30px;
     background: #aeafae;
   }
+
+  @include media-mobile {
+    display: none;
+  }
 }
 
 .add-task {
@@ -265,5 +269,11 @@
     width: 2px;
     height: 30px;
     background: #aeafae;
+  }
+
+  @include media-mobile {
+    color: rgb(24, 100, 72);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.16), -23px 0 20px -23px #79b98c, 23px 0 20px -23px #79b98c, 0 0 40px rgba(70, 68, 68, 0.1) inset;
+    background: transparent;
   }
 }

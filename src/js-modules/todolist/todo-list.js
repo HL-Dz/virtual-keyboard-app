@@ -127,24 +127,26 @@ export class Todolist {
           })
           .then(() => {
         
-            let newItem = {
-              id: generateId(),
-              todo: value,
-              checked: false,
-              disabled: false,
-              startTime: generateCurrentTime(),
-              endTime: ''
-            }
-        
-            const isFirstStart = !this.todos.length;
-        
-            if(isFirstStart) {
-              this.emptyElem.classList.add('todo__empty_hidden');
-            }
-        
-            this.todos.push(newItem);
-            localStorage.setItem("tasks", JSON.stringify(this.todos));
-            this.createNewListItem(newItem);
+            setTimeout(() => {
+              let newItem = {
+                id: generateId(),
+                todo: value,
+                checked: false,
+                disabled: false,
+                startTime: generateCurrentTime(),
+                endTime: ''
+              }
+          
+              const isFirstStart = !this.todos.length;
+          
+              if(isFirstStart) {
+                this.emptyElem.classList.add('todo__empty_hidden');
+              }
+          
+              this.todos.push(newItem);
+              localStorage.setItem("tasks", JSON.stringify(this.todos));
+              this.createNewListItem(newItem);
+            }, 1500);
           })
       }
   }

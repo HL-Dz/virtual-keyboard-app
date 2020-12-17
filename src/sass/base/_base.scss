@@ -12,6 +12,7 @@ body {
   background-size: auto;
   font-size: 1.6rem;
   font-family: 'Roboto', sans-serif;
+  @extend %custom-scroll;
 }
 
 * {
@@ -53,6 +54,7 @@ h6 {
 
   @include media-mobile {
     font-size: 1.5rem;
+    color: rgb(156, 156, 156);
   }
 }
 ::-moz-placeholder {
@@ -61,6 +63,7 @@ h6 {
   font-family: 'Montserrat Alternates', sans-serif;
 
   @include media-mobile {
+    color: rgb(48, 45, 45);
     font-size: 1.5rem;
   }
 }
@@ -70,6 +73,7 @@ h6 {
   font-family: 'Montserrat Alternates', sans-serif;
 
   @include media-mobile {
+    color: rgb(48, 45, 45);
     font-size: 1.5rem;
   }
 }
@@ -79,6 +83,7 @@ h6 {
   font-family: 'Montserrat Alternates', sans-serif;
 
   @include media-mobile {
+    color: rgb(48, 45, 45);
     font-size: 1.5rem;
   }
 }

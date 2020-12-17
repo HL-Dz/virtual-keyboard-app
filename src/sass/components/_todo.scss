@@ -55,6 +55,16 @@
   &_hide {
     top: -100%;
     opacity: 0;
+
+    @include media-mobile {
+      opacity: 1;
+    }
+  }
+
+  @include media-mobile {
+    margin-top: 10px;
+    position: static;
+    background: none;
   }
 }
 
@@ -71,6 +81,14 @@
   border-radius: 5px;
   box-shadow: 0 0 45px grey;
   @extend %custom-scroll;
+
+  @include media-mobile {
+    padding: 0 5px;
+    box-shadow: none;
+    min-height: 550px;
+    width: 100%;
+    background: linear-gradient(310deg, rgba(3,1,14, 0.8) 50%, rgba(18, 83, 46, 0.9) 100%);
+  }
 }
 
 .todo__close {
@@ -93,6 +111,9 @@
       height: 20px;
       opacity: 1;
     }
+  }
+  @include media-mobile {
+    display: none;
   }
 }
 
@@ -117,7 +138,8 @@
   border-radius: 2px;
 
   @include media-mobile {
-    padding-top: 5px;
+    padding: 5px;
+    border: none;
   }
 }
 
@@ -147,10 +169,15 @@
   align-items: center;
   padding: 20px 0;
   overflow: hidden;
-  border-bottom: 1px solid #2a4b36;
+  border-bottom: 1px solid #35443a;
   transition: all 1s ease;
   border-radius: 5px;
   z-index: 1;
+  opacity: 1;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &_hidden {
     opacity: 0;
@@ -193,15 +220,20 @@
     }
   }
 
-  &:last-child {
-    border-bottom: none;
-  }
-
   @include media-mobile {
     align-items: flex-start;
     padding-top: 15px;
     border-radius: 0px;
-    // border-radius: 5px;
+    animation: show-elem 1s ease;
+    border: 1px solid rgb(56, 73, 72);
+    border-radius: 5px;
+    background: #253c3169;
+    margin-bottom: 5px;
+
+
+    &:last-child {
+      border-bottom: 1px solid rgb(56, 77, 75);
+    }
   }
 }
 
@@ -239,6 +271,8 @@
     font-size: 0;
 
     & .confirm-btn, .confirm-cancel {
+      height: 0;
+      padding: 0;
       background: transparent;
       font-size: 0;
     }
@@ -259,11 +293,6 @@
     top: 100%;
     opacity: 0;
     animation: modal-down 0.5s ease;
-
-    & .completion-btn, .completion-cancel {
-      background: transparent;
-      font-size: 0;
-    }
   }
 }
 
@@ -441,11 +470,17 @@
     &:before {
       opacity: 1;
       animation: checkbox-elem 0.5s ease;
+
+      @include media-mobile {
+        animation: none;
+      }
     }
   }
 
   @include media-mobile {
     position: absolute;
+    top: 10px;
+    left: 10px;
     width: 30px;
     height: 30px;
     margin-right: 0px;
@@ -463,11 +498,17 @@
   }
 
   @include media-mobile {
+    color: #aeb3af;
     width: 100%;
-    padding-top: 3px;
+    padding: 3px 2px 0;
     margin-top: 47px;
     font-size: 1.5rem;
-    text-align: justify;
+    text-align: center;
+    border-top: 1px solid rgb(55, 92, 79);
+
+    &_inactive {
+      color: rgba(190, 196, 190, 0.438);
+    }
   }
 }
 
@@ -491,7 +532,8 @@
 
   @include media-mobile {
     position: absolute;
-    right: 0;
+    top: 6px;
+    right: 5px;
     width: 35px;
     height: 35px;
   }
@@ -506,20 +548,16 @@
   max-width: 30px;
   max-height: auto;
   transition: all 0.2s ease-in-out;
-
-  @include media-mobile {
-    top: 0%;
-    transform: translateX(-50%);
-  }
-
 }
 
 .todo__empty {
   position: absolute;
-  bottom: 20px;
+  top: 60px;
   font-size: 2.1rem;
   color: #fff;
   opacity: 1;
+  transition: opacity 0.3s ease;
+  animation: empty-show-elem 0.5s ease;
 
   &_hidden {
     opacity: 0;
@@ -527,6 +565,8 @@
 
   @include media-mobile {
     font-size: 1.7rem;
+    color: #d0c9c9;
+    border-bottom: 1px solid rgb(139, 124, 124);
   }
 }
 
@@ -584,5 +624,25 @@
   }
   100% {
     top: 100%;
+  }
+}
+
+@keyframes show-elem {
+  0% {
+    opacity: 0;
+    margin-top: -205px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+
+@keyframes empty-show-elem {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
