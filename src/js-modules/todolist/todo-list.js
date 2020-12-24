@@ -111,8 +111,7 @@ export class Todolist {
         }, 2000);
         return;
       } else {
-        new Promise(resolve=> {
-
+        return new Promise(resolve=> {
           preloader.classList.add('preloader_active');
           addTaskBtn.setAttribute('disabled', '');
           showTaskBtn.setAttribute('disabled', '');
@@ -122,32 +121,27 @@ export class Todolist {
             addTaskBtn.removeAttribute('disabled');
             showTaskBtn.removeAttribute('disabled');
             outputField.value = '';
+            resolve();
           }, 1500);
-      
-          resolve();
-          })
-          .then(() => {
+        }).then(() => {
+            let newItem = {
+              id: generateId(),
+              todo: value,
+              checked: false,
+              disabled: false,
+              startTime: generateCurrentTime(),
+              endTime: ''
+            }
         
-            setTimeout(() => {
-              let newItem = {
-                id: generateId(),
-                todo: value,
-                checked: false,
-                disabled: false,
-                startTime: generateCurrentTime(),
-                endTime: ''
-              }
-          
-              const isFirstStart = !this.todos.length;
-          
-              if(isFirstStart) {
-                this.emptyElem.classList.add('todo__empty_hidden');
-              }
-          
-              this.todos.push(newItem);
-              localStorage.setItem("tasks", JSON.stringify(this.todos));
-              this.createNewListItem(newItem);
-            }, 1500);
+            const isFirstStart = !this.todos.length;
+        
+            if(isFirstStart) {
+              this.emptyElem.classList.add('todo__empty_hidden');
+            }
+        
+            this.todos.push(newItem);
+            localStorage.setItem("tasks", JSON.stringify(this.todos));
+            this.createNewListItem(newItem);
           })
       }
   }
