@@ -1,12 +1,12 @@
 # Virtual Keyboard + ToDo List
 
-[Deploy](https://virtual-keyboard-app1.netlify.app/ "Virtual keyboard")
+[Deploy project](https://virtual-keyboard-app1.netlify.app/ "Virtual keyboard")
 
 
 Technologies used:
 
-+ CSS/SASS
 + JavaScript
++ CSS/SASS
 + Webpack
 
 ***
@@ -24,15 +24,19 @@ The App is adaptive, but the virtual keyboard is hidden for tablets, because the
 
 ***
 ## Getting started:
-1. Clone this repo
-``` javascript
+1. Clone this repo:
+``` command
 git clone git@github.com:HL-Dz/virtual-keyboard-app.git
 ```
-2. Install all dependencies
-``` javascript
+2. Go to directory:
+``` command
+cd virtual-keyboard-app
+```
+3. Install all dependencies:
+``` command
 npm ci
 ```
-3. Start dev server
-``` javascript
+4. Start dev server:
+``` command
 npm run start
 ```
