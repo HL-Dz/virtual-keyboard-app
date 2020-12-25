@@ -16,7 +16,7 @@ Virtual keyboard support several languages. To switch the language, you need to 
 New languages can be easily added as needed using JavaScript.
 
 Using the virtual keyboard, you can add new tasks to the todo list.
-Todo list can be viewed by press on the button "Show all task".
+Todo list can be viewed by press on the button "**Show all task**".
 The App is adaptive, but the virtual keyboard is hidden for tablets, because the system keyboard appears. 
 
 
@@ -24,19 +24,19 @@ The App is adaptive, but the virtual keyboard is hidden for tablets, because the
 
 ***
 ## Getting started:
-1. Clone this repo:
+**1. Clone this repo:**
 ``` command
 git clone git@github.com:HL-Dz/virtual-keyboard-app.git
 ```
-2. Go to directory:
+**2. Go to directory:**
 ``` command
 cd virtual-keyboard-app
 ```
-3. Install all dependencies:
+**3. Install all dependencies:**
 ``` command
 npm ci
 ```
-4. Start dev server:
+**4. Start dev server:**
 ``` command
 npm run start
 ```
