@@ -1,6 +1,6 @@
 # Virtual Keyboard + ToDo List
 
-[Deploy project](https://virtual-keyboard-app1.netlify.app/ "Virtual keyboard")
+## [Deploy project - https://virtual-keyboard-app1.netlify.app/](https://virtual-keyboard-app1.netlify.app/ "Virtual keyboard")
 
 
 Technologies used:
@@ -20,7 +20,7 @@ Todo list can be viewed by press on the button "**Show all task**".
 The App is adaptive, but the virtual keyboard is hidden for tablets, because the system keyboard appears. 
 
 
-![Main screen](./src/img/main.png "Main")
+[![Main screen](./src/img/keyboard.gif)](https://virtual-keyboard-app1.netlify.app/) "Main")
 
 ***
 ## Getting started:
@@ -39,4 +39,8 @@ npm ci
 **4. Start dev server:**
 ``` command
 npm run start
+```
+**5. Builds the app for production to the build folder.:**
+``` command
+npm run build
 ```
