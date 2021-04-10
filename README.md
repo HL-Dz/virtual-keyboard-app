@@ -20,7 +20,7 @@ Todo list can be viewed by press on the button "**Show all task**".
 The App is adaptive, but the virtual keyboard is hidden for tablets, because the system keyboard appears. 
 
 
-[![Main screen](./src/img/keyboard.gif)](https://virtual-keyboard-app1.netlify.app/) "Main")
+[![Main screen](./src/img/keyboard.gif)](https://virtual-keyboard-app1.netlify.app/)
 
 ***
 ## Getting started:
